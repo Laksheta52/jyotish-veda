@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Mail, Lock, Eye, EyeOff, Shield } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, Shield, Zap } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 
 export default function AdminLoginPage() {
@@ -27,6 +27,13 @@ export default function AdminLoginPage() {
         } finally {
             setLoading(false);
         }
+    };
+
+    // Dev bypass for testing
+    const handleDevBypass = () => {
+        localStorage.setItem('userType', 'admin');
+        localStorage.setItem('userName', 'Admin');
+        router.push('/guru-panel');
     };
 
     return (
@@ -97,6 +104,15 @@ export default function AdminLoginPage() {
                             </button>
                         </form>
 
+                        {/* Dev Bypass Button */}
+                        <button
+                            onClick={handleDevBypass}
+                            className="w-full mt-4 py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg transition-all flex items-center justify-center gap-2"
+                        >
+                            <Zap size={18} />
+                            Quick Access (Dev Mode)
+                        </button>
+
                         <p className="mt-6 text-center text-gray-500 text-sm">
                             <a href="/login" className="text-purple-600 hover:text-purple-700 font-medium underline">
                                 ← Back to Student Login
@@ -108,3 +124,4 @@ export default function AdminLoginPage() {
         </div>
     );
 }
+
